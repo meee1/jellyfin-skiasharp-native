@@ -28,7 +28,10 @@ jobs:
         # A list of files, directories, and wildcard patterns to cache and restore
         path: Jellyfin.SkiaSharp.NativeAssets.LinuxArm/gcc-linaro-4.9.4-2017.01-x86_64_aarch64-linux-gnu, Jellyfin.SkiaSharp.NativeAssets.LinuxArm/depot_tools, Jellyfin.SkiaSharp.NativeAssets.LinuxArm/tools 
         # An explicit key for restoring and saving the cache
-        key: cachebuild
+        key: cachebuild-${{ runner.os }}
+        restore-keys: |
+          cachebuild-${{ runner.os }}
+          cachebuild-
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
@@ -51,7 +54,7 @@ jobs:
           
     # Runs a single command using the runners shell
     - name: Run a one-line script
-      run: cd Jellyfin.SkiaSharp.NativeAssets.LinuxMusl && bash compile-libSkiaSharp.sh
+      run: cd Jellyfin.SkiaSharp.NativeAssets.LinuxMusl && bash build-in-docker.sh
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
